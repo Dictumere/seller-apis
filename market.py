@@ -14,19 +14,19 @@ def get_product_list(page, campaign_id, access_token):
     """Получить список товаров
 
     Args:
-        page (string): Идентификатор страницы c результатами.
-        campaign_id (integer): ID кампании в API и магазина в кабинете.
-        access_token (string): Авторизационный токен.
+        page (str): Идентификатор страницы c результатами.
+        campaign_id (str): ID кампании в API и магазина в кабинете.
+        access_token (str): Авторизационный токен.
 
     Returns:
         dict: Данные о товарах, полученные с Яндекс Маркета.
 
     Examples:
         >>> get_product_list(page, campaign_id, access_token)
-        {"status":"OK","result":{"paging":{"nextPageToken":"string","prevPageToken":"string"}, ...}}}
+        {"status":"OK","result":{"paging":{"nextPageToken":"str","prevPageToken":"str"}, ...}}}
 
         >>> get_product_list(wrong_page, campaign_id, access_token)
-        {"status":"OK","errors":[{"code":"string","message":"string"}]}
+        {"status":"OK","errors":[{"code":"str","message":"str"}]}
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -51,8 +51,8 @@ def update_stocks(stocks, campaign_id, access_token):
 
     Args:
         stocks (list): Данные о товарных остатках.
-        campaign_id (integer): ID кампании в API и магазина в кабинете.
-        access_token (string):  Авторизационный токен.
+        campaign_id (str): ID кампании в API и магазина в кабинете.
+        access_token (str):  Авторизационный токен.
 
     Returns:
         dict: Обновленные остатки.
@@ -84,8 +84,8 @@ def update_price(prices, campaign_id, access_token):
 
     Args:
         prices (list): Данные о ценах на товары.
-        campaign_id (integer): ID кампании в API и магазина в кабинете.
-        access_token (string):  Авторизационный токен.
+        campaign_id (str): ID кампании в API и магазина в кабинете.
+        access_token (str):  Авторизационный токен.
 
     Returns:
         dict: Обновленные цены.
@@ -116,8 +116,8 @@ def get_offer_ids(campaign_id, market_token):
     """Получить артикулы товаров Яндекс маркета
 
     Args:
-        campaign_id (integer): ID кампании в API и магазина в кабинете.
-        market_token (string): Авторизационный токен.
+        campaign_id (str): ID кампании в API и магазина в кабинете.
+        market_token (str): Авторизационный токен.
 
     Returns:
         list: Идентификаторы товаров на Я.Маркете
@@ -149,7 +149,7 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
     Args:
         watch_remnants (list): Товары с остатками из внешнего источника.
         offer_ids (list): Идентификаторы товаров на Я.Маркете.
-        warehouse_id (string): Идентификатор склада, где хранятся товары.
+        warehouse_id (str): Идентификатор склада, где хранятся товары.
 
     Returns:
         list: Список остатков товаров, готовых для загрузки на Яндекс Маркет.
@@ -220,7 +220,7 @@ def create_prices(watch_remnants, offer_ids):
         [{"id": "12345", "price": {"value": 1000, "currencyId": "RUR"}}]
 
         >>> create_prices(watch_remnants, wrong_offer_ids)
-        {"status":"OK","errors":[{"code":"string","message":"string"}]}
+        {"status":"OK","errors":[{"code":"str","message":"str"}]}
     """
     prices = []
     for watch in watch_remnants:
@@ -235,7 +235,7 @@ def create_prices(watch_remnants, offer_ids):
                     # "vat": 0,
                 },
                 # "marketSku": 0,
-                # "shopSku": "string",
+                # "shopSku": "str",
             }
             prices.append(price)
     return prices
@@ -246,8 +246,8 @@ async def upload_prices(watch_remnants, campaign_id, market_token):
 
     Args:
         watch_remnants (list): Товары с остатками из внешнего источника.
-        campaign_id (integer): ID кампании в API и магазина в кабинете.
-        market_token (string): Авторизационный токен.
+        campaign_id (str): ID кампании в API и магазина в кабинете.
+        market_token (str): Авторизационный токен.
 
     Returns:
         list: Список цен для товаров, которые были загружены на Яндекс Маркет.
@@ -257,7 +257,7 @@ async def upload_prices(watch_remnants, campaign_id, market_token):
         [{"id": "12345", "price": {"value": 1000, "currencyId": "RUR"}}]
 
         >>> await upload_prices(watch_remnants, campaign_id, market_token)
-        {"status":"OK","errors":[{"code":"string","message":"string"}]}
+        {"status":"OK","errors":[{"code":"str","message":"str"}]}
     """
     offer_ids = get_offer_ids(campaign_id, market_token)
     prices = create_prices(watch_remnants, offer_ids)
@@ -271,9 +271,9 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
 
     Args:
         watch_remnants (list): Товары с остатками из внешнего источника.
-        campaign_id (integer): ID кампании в API и магазина в кабинете.
-        market_token (string): Авторизационный токен.
-        warehouse_id (integer): ID склада, на котором хранятся товары.
+        campaign_id (str): ID кампании в API и магазина в кабинете.
+        market_token (str): Авторизационный токен.
+        warehouse_id (str): ID склада, на котором хранятся товары.
 
     Returns:
         list: Список товаров с остатками больше нуля.
@@ -284,7 +284,7 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
         ([{"sku": "12345", "items": [{"count": 10}]}], [{"sku": "12345", "items": [{"count": 10}]}])
 
         >>> await upload_stocks(watch_remnants, campaign_id, market_token, wrong_warehouse_id)
-        {"status":"OK","errors":[{"code":"string","message":"string"}]}
+        {"status":"OK","errors":[{"code":"str","message":"str"}]}
     """    
     offer_ids = get_offer_ids(campaign_id, market_token)
     stocks = create_stocks(watch_remnants, offer_ids, warehouse_id)

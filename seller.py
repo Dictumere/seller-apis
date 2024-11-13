@@ -15,9 +15,9 @@ def get_product_list(last_id, client_id, seller_token):
     """Получить список товаров магазина озон
 
     Args:
-        last_id (string): Идентификатор последнего значения на странице.
-        client_id (string): Идентификатор клиента.
-        seller_token (string): API-ключ продавца.
+        last_id (str): Идентификатор последнего значения на странице.
+        client_id (str): Идентификатор клиента.
+        seller_token (str): API-ключ продавца.
 
     Returns:
         dict:  Словарь, содержащий список товаров, возвращаемый Ozon API.
@@ -27,7 +27,7 @@ def get_product_list(last_id, client_id, seller_token):
         {'result': {'items': [{'product_id': 223681945, 'offer_id': '136748'}], 'total': 1, 'last_id': 'bnVсbA=='}}.
 
         >>> get_product_list("dfdsfwe", "client_id_example", "token_example")
-        {'code': 0, 'details': [{'typeUrl': 'string', 'value': 'string'}], 'message': 'string'}.
+        {'code': 0, 'details': [{'typeUrl': 'str', 'value': 'str'}], 'message': 'str'}.
     """
     url = "https://api-seller.ozon.ru/v2/product/list"
     headers = {
@@ -51,8 +51,8 @@ def get_offer_ids(client_id, seller_token):
     """Получить артикулы товаров магазина озон
 
     Args:
-        client_id (string): Идентификатор клиента.
-        seller_token (string): API-ключ продавца.
+        client_id (str): Идентификатор клиента.
+        seller_token (str): API-ключ продавца.
 
     Returns:
         list: Список артикулов товаров
@@ -62,7 +62,7 @@ def get_offer_ids(client_id, seller_token):
         ['136748', '136749']
 
         >>> get_offer_ids("incorrect_client_id", "token_example")
-        {'code': 0, 'details': [{'typeUrl': 'string', 'value': 'string'}], 'message': 'Invalid client ID.'}
+        {'code': 0, 'details': [{'typeUrl': 'str', 'value': 'str'}], 'message': 'Invalid client ID.'}
     """
     last_id = ""
     product_list = []
@@ -84,8 +84,8 @@ def update_price(prices: list, client_id, seller_token):
 
     Args:
         prices (list): Список цен, которые должны быть обновлены.
-        client_id (string): Идентификатор клиента.
-        seller_token (string): API-ключ продавца.
+        client_id (str): Идентификатор клиента.
+        seller_token (str): API-ключ продавца.
 
     Returns:
         dict: Ответ от API с информацией об обновленных ценах.
@@ -95,7 +95,7 @@ def update_price(prices: list, client_id, seller_token):
         {'result': {'updated_count': 1}, 'message': 'Prices updated successfully.'}
 
         >>> update_price([{"offer_id": "136748", "price": 5990}], "wrong_client_id", "wrong_token")
-        {'code': 0, 'details': [{'typeUrl': 'string', 'value': 'string'}], 'message': 'Invalid API key.'}
+        {'code': 0, 'details': [{'typeUrl': 'str', 'value': 'str'}], 'message': 'Invalid API key.'}
     """
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
     headers = {
@@ -115,8 +115,8 @@ def update_stocks(stocks: list, client_id, seller_token):
 
     Args:
         stocks (list): Список словарей, каждый из которых содержит информацию о товаре
-        client_id (string): Идентификатор клиента.
-        seller_token (string): API-ключ продавца.
+        client_id (str): Идентификатор клиента.
+        seller_token (str): API-ключ продавца.
 
     Returns:
         dict: Подтверждение успешного обновления остатков.
@@ -126,7 +126,7 @@ def update_stocks(stocks: list, client_id, seller_token):
         {'status': 'success', 'message': 'Остатки обновлены успешно'}
 
         >>> update_stocks([{'offer_id': '136748', 'stock': 0}], 'invalid_client_id', 'invalid_token')
-        {'code': 0, 'details': [{'typeUrl': 'string', 'value': 'string'}], 'message': 'Invalid credentials'}
+        {'code': 0, 'details': [{'typeUrl': 'str', 'value': 'str'}], 'message': 'Invalid credentials'}
     """   
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
     headers = {
